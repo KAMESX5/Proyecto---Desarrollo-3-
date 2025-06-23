@@ -30,8 +30,12 @@ jobs:
           path: ~/.m2
           key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}
           restore-keys: ${{ runner.os }}-m2
-      - name: Build and analyze
+      - name: Analizar todos los subproyectos
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-        run: mvn -B verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar -Dsonar.projectKey=KAMESX5_Proyecto---Desarrollo-3-
-        working-directory: my-app
+        run: for pom in $(find . -name 'pom.xml'); do
+          dir=$(dirname "$pom")
+          key="KAMESX5_$(basename $dir)"
+          mvn -f "$pom" -B verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar -Dsonar.projectKey=$key
+          done
+        

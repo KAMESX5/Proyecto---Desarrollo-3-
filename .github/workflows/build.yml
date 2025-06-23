@@ -33,7 +33,8 @@ jobs:
       - name: Analizar todos los subproyectos
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-        run: for pom in $(find . -name 'pom.xml'); do
+        run: |
+          for pom in $(find . -name 'pom.xml'); do
           dir=$(dirname "$pom")
           key="KAMESX5_$(basename $dir)"
           mvn -f "$pom" -B verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar -Dsonar.projectKey=$key

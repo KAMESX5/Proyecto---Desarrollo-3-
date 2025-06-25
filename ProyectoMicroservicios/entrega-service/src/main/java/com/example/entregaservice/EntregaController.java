@@ -12,11 +12,9 @@ import java.util.List;
 @RequestMapping("/api/entrega")
 public class EntregaController {
 
-    private final OrdenClient ordenClient;
     private final EntregaRepository repository;
 
-    public EntregaController(EntregaRepository repository, OrdenClient ordenClient) {
-        this.ordenClient = ordenClient;
+    public EntregaController(EntregaRepository repository) {
         this.repository = repository;
     }
 
@@ -26,28 +24,18 @@ public class EntregaController {
     }
 
     @PostMapping
-    public ResponseEntity<?> crear(@RequestBody List<RequestOrden> Model) {
+    public ResponseEntity<?> crear(@RequestBody Entrega Model) {
         List<Entrega> lista = new LinkedList<Entrega>();
-        for (RequestOrden Obj : Model)
-        {
-            OrdenModel Orden = ordenClient.obtenerOrden(Obj.getOrden().getIdOrden());
-            if(Orden != null){
-                Entrega entrega = new Entrega();
-                entrega.setIdOrden(Orden.getIdOrden());
-                entrega.setIdRepartidor(Obj.getEntrega().getIdRepartidor());
-                entrega.setEstadoEntrega(Obj.getEntrega().getEstadoEntrega());
-                entrega.setUbicacionActual(Obj.getEntrega().getUbicacionActual());
-                entrega.setHoraInicio(Obj.getEntrega().getHoraInicio());
-                entrega.setHoraEntrega(Obj.getEntrega().getHoraEntrega());
-                lista.add(entrega);
-            }
-            else {
-                return  ResponseEntity.ok("La Orden no puede ser null.");
-            }
-        }
+        Entrega entrega = new Entrega();
+        entrega.setIdOrden(Model.getIdOrden());
+        entrega.setIdRepartidor(Model.getIdRepartidor());
+        entrega.setEstadoEntrega(Model.getEstadoEntrega());
+        entrega.setUbicacionActual(Model.getUbicacionActual());
+        entrega.setHoraInicio(Model.getHoraInicio());
+        entrega.setHoraEntrega(Model.getHoraEntrega());
+        lista.add(entrega);
 
         var lista2 = repository.saveAll(lista);
-
 
         return ResponseEntity.ok(lista2);
     }

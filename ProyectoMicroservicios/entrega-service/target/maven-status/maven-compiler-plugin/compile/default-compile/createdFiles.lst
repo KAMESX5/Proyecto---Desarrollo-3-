@@ -1,0 +1,4 @@
+com\example\entregaservice\EntregaServiceApplication.class
+com\example\entregaservice\EntregaController.class
+com\example\entregaservice\Entrega.class
+com\example\entregaservice\EntregaRepository.class

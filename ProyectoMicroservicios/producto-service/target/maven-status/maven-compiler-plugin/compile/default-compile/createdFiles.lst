@@ -1,0 +1,7 @@
+com\productoservice\producto_service\rabbitmq\ProductoConsumer.class
+com\productoservice\producto_service\ProductoRepository.class
+com\productoservice\producto_service\Producto.class
+com\productoservice\producto_service\ProductoController.class
+com\productoservice\producto_service\RequestProducto.class
+com\productoservice\producto_service\rabbitmq\RabbitMQConfig.class
+com\productoservice\producto_service\ProductoServiceApplication.class

@@ -9,7 +9,7 @@ import lombok.Setter;
 @Setter
 
 public class RequestOrden {
-    private Orden Orden;
+    private Orden orden;
     private List<ProductoModel> lstProductos;
-    private List<EntregaModel> lstEntrega;
+    private EntregaModel entrega;
 }

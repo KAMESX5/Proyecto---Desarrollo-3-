@@ -1,0 +1,12 @@
+com\example\ordenservice\RequestOrden.class
+com\example\ordenservice\OrdenRepository.class
+com\example\ordenservice\OrdenController.class
+com\example\ordenservice\rabbitmq\RabbitMQSender.class
+com\example\ordenservice\EntregaClient.class
+com\example\ordenservice\EntregaModel.class
+com\example\ordenservice\OrdenServiceApplication.class
+com\example\ordenservice\DetalleOrdenClient.class
+com\example\ordenservice\ProductoClient.class
+com\example\ordenservice\rabbitmq\RabbitMQConfig.class
+com\example\ordenservice\Orden.class
+com\example\ordenservice\ProductoModel.class

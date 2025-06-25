@@ -2,6 +2,7 @@ package com.example.ordenservice;
 
 import jakarta.persistence.*;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 import lombok.Getter;
 import lombok.Setter;
@@ -10,7 +11,7 @@ import lombok.Setter;
 @Setter
 @Entity
 @Table(name = "orden")
-public class Orden {
+public class Orden implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

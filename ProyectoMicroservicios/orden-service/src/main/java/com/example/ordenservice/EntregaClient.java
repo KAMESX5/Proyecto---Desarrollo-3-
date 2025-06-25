@@ -7,10 +7,10 @@ import org.springframework.web.bind.annotation.RequestBody;
 
 import java.util.List;
 
-@FeignClient(name = "ruta-service")
+@FeignClient(name = "entrega-service")
 
 public interface EntregaClient {
     @PostMapping("/api/entrega")
-    ResponseEntity<String> CrearEntregas(@RequestBody List<EntregaModel> ListaEntrega);
+    ResponseEntity<String> CrearEntregas(@RequestBody EntregaModel ListaEntrega);
 }
 

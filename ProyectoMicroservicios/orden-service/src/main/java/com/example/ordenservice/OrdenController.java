@@ -38,7 +38,11 @@ public class OrdenController {
 
     @GetMapping("/{id}")
     public Orden obtenerPorId(@PathVariable int id) {
-        return repository.findById(id).orElse(null);
+        System.out.println("idbusqueda:" + id);
+        var respuesta = repository.findById(id).orElse(null);
+        System.out.println("encontrado:" + respuesta.getIdOrden());
+
+        return respuesta;
     }
 
     public ResponseEntity<?> CrearDetalleOrden(RequestOrden ModelRequestOrden) {
@@ -57,8 +61,8 @@ public class OrdenController {
         return response;
     }
 
-    public ResponseEntity<?> CrearEntrega(RequestOrden ModelRequestOrden) {
-        ResponseEntity<String> response = entregaClient.CrearEntregas(ModelRequestOrden.getLstEntrega());
+    public ResponseEntity<?> CrearEntrega(EntregaModel Model) {
+        ResponseEntity<String> response = entregaClient.CrearEntregas(Model);
         return response;
     }
 
@@ -76,10 +80,10 @@ public class OrdenController {
                 eliminar(ordenGuardada.getIdOrden());
             }
 
-            if(ModelOrden.getLstEntrega() != null){
-                CrearEntrega(ModelOrden);
+            if(ModelOrden.getEntrega() != null){
+                ModelOrden.getEntrega().setIdOrden(ordenGuardada.getIdOrden());
+                CrearEntrega(ModelOrden.getEntrega());
             }
-
         }
 
         return ModelOrden.getOrden();
@@ -92,8 +96,9 @@ public class OrdenController {
 
         rabbitMQSender.enviarCreateDetalle(ModelOrden);
 
-        if (ModelOrden.getLstEntrega() != null) {
-            CrearEntrega(ModelOrden);
+        if (ModelOrden.getEntrega() != null) {
+            ModelOrden.getEntrega().setIdOrden(ordenGuardada.getIdOrden());
+            CrearEntrega(ModelOrden.getEntrega());
         }
 
         return ordenGuardada;

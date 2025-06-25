@@ -10,7 +10,6 @@ import java.time.LocalDateTime;
 @Setter
 
 public class EntregaModel {
-
     private int idOrden;
     private int idRepartidor;
 

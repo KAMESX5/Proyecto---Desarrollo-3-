@@ -13,6 +13,7 @@ import java.util.List;
 @RequestMapping("/api/detalleorden")
 public class DetalleordenController {
 
+    @Autowired
     private final DetalleordenRepository repository;
     private final ProductoClient productoClient;
     private final OrdenClient ordenClient;
@@ -37,7 +38,6 @@ public class DetalleordenController {
         List<Detalleorden> lista = new ArrayList<>();
         for (ProductoModel item : Model.getLstProductos())
         {
-            System.out.println(item.getIdProducto());
             ProductoModel producto = productoClient.obtenerProducto(item.getIdProducto());
             if (producto == null || producto.getStock() < item.getCantidad())
             {
@@ -59,12 +59,12 @@ public class DetalleordenController {
 
         repository.saveAll(lista);
 
-        OrdenModel Orden = ordenClient.obtenerOrden(Model.getOrden().getIdOrden());
-        Orden.setTotal(lista.stream()
-                .mapToDouble(det -> det.getPrecio() * det.getCantidad())
-                .sum());
+        OrdenModel orden = ordenClient.obtenerOrden(Model.getOrden().getIdOrden());
+        orden.setTotal(lista.stream()
+                     .mapToDouble(det -> det.getPrecio() * det.getCantidad())
+                     .sum());
 
-        ordenClient.actualizarOrden(Model.getOrden().getIdOrden(), Orden);
+        ordenClient.actualizarOrden(orden.getIdOrden(), orden);
 
         return ResponseEntity.ok("Detalle orden creado correctamente");
     }
@@ -96,15 +96,15 @@ public class DetalleordenController {
                     Detalleorden detalleActualizada = repository.save(detalleExistente);
 
                     List<Detalleorden> lst = repository.findByIdOrden(Model.getIdOrden());
-                    OrdenModel Orden = ordenClient.obtenerOrden(Model.getIdOrden());
+                    OrdenModel orden = ordenClient.obtenerOrden(Model.getIdOrden());
 
-                    Orden.setTotal(
+                    orden.setTotal(
                             lst.stream()
                                     .mapToDouble(det -> det.getPrecio() * det.getCantidad())
                                     .sum()
                     );
 
-                    ordenClient.actualizarOrden(Orden.getIdOrden(), Orden);
+                    ordenClient.actualizarOrden(orden.getIdOrden(), orden);
 
                     return detalleActualizada;
                 })

@@ -57,12 +57,12 @@ public class DetalleordenConsumer {
 
         repository.saveAll(lista);
 
-        OrdenModel Orden = ordenClient.obtenerOrden(Model.getOrden().getIdOrden());
-        Orden.setTotal(lista.stream()
-                .mapToDouble(det -> det.getPrecio() * det.getCantidad())
-                .sum());
+        OrdenModel orden = ordenClient.obtenerOrden(Model.getOrden().getIdOrden());
+        orden.setTotal(lista.stream()
+             .mapToDouble(det -> det.getPrecio() * det.getCantidad())
+             .sum());
 
-        ordenClient.actualizarOrden(Model.getOrden().getIdOrden(), Orden);
+        ordenClient.actualizarOrden(orden.getIdOrden(), orden);
 
         System.out.println("Detalles de orden creados exitosamente por consumer.");
     }

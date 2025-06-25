@@ -9,7 +9,7 @@ import java.time.LocalDate;
 @Getter
 @Setter
 
-public class OrdenModel implements Serializable {
+public class OrdenModel {
     private int idOrden;
     private int idUsuario;
     private String estado;

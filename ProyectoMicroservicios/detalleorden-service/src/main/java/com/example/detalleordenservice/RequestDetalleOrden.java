@@ -9,6 +9,6 @@ import java.util.List;
 @Setter
 
 public class RequestDetalleOrden {
-    private OrdenModel Orden;
+    private OrdenModel orden;
     private List<ProductoModel> lstProductos;
 }

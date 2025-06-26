@@ -8,7 +8,7 @@
     <groupId>com.proyecto</groupId>
     <artifactId>ProyectoMicroservicios</artifactId>
     <version>1.0.0</version>
-    <packaging>pom</packaging>
+    <packaging>pom</packaging> 
 
     <modules>
         <module>detalleorden-service</module>

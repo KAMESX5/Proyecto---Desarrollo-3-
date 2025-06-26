@@ -1,7 +1,0 @@
-com\example\pagoservice\PagoServiceApplication.class
-com\example\pagoservice\PagoRepository.class
-com\example\pagoservice\Pago.class
-com\example\pagoservice\OrdenClient.class
-com\example\pagoservice\OrdenModel.class
-com\example\pagoservice\PagoController.class
-com\example\pagoservice\RequestPago.class

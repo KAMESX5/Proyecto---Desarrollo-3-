@@ -1,0 +1,47 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: detalleorden-service
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: detalleorden-service
+  template:
+    metadata:
+      labels:
+        app: detalleorden-service
+    spec:
+      containers:
+        - name: detalleorden-service
+          image: us-central1-docker.pkg.dev/wired-name-463505-d6/microservicios-repo/detalleorden-service:latest
+          ports:
+            - containerPort: 8084
+          env:
+            - name: SPRING_RABBITMQ_HOST
+              value: "rabbitmq"
+            - name: SPRING_RABBITMQ_PORT
+              value: "5672"
+            - name: EUREKA_CLIENT_SERVICEURL_DEFAULTZONE
+              value: "http://eureka-server:8761/eureka"
+            - name: SPRING_DATASOURCE_URL
+              value: "jdbc:postgresql://postgres:5432/postgres"
+            - name: SPRING_DATASOURCE_USERNAME
+              value: "postgres"
+            - name: SPRING_DATASOURCE_PASSWORD
+              value: "2711"
+            - name: SPRING_PROFILES_ACTIVE
+              value: "prod"
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: detalleorden-service
+spec:
+  type: ClusterIP
+  selector:
+    app: detalleorden-service
+  ports:
+    - port: 8084
+      targetPort: 8084

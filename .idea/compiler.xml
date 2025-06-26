@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="CompilerConfiguration">
+    <excludeFromCompile>
+      <directory url="file://$PROJECT_DIR$/common-models/src/main/resources/archetype-resources" includeSubdirectories="true" />
+    </excludeFromCompile>
+    <annotationProcessing>
+      <profile default="true" name="Default" enabled="true" />
+      <profile name="Maven default annotation processors profile" enabled="true">
+        <sourceOutputDir name="target/generated-sources/annotations" />
+        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <module name="pago-service" />
+        <module name="producto-service" />
+        <module name="detalleorden-service" />
+        <module name="entrega-service" />
+        <module name="orden-service" />
+        <module name="eureka-server" />
+      </profile>
+    </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="common-models" target="1.8" />
+      <module name="pagos-service" target="17" />
+      <module name="pedido-service" target="17" />
+      <module name="RabbitMQ_Server" target="24" />
+      <module name="ruta-service" target="17" />
+    </bytecodeTargetLevel>
+  </component>
+  <component name="JavacSettings">
+    <option name="ADDITIONAL_OPTIONS_OVERRIDE">
+      <module name="detalleorden-service" options="-parameters" />
+      <module name="entrega-service" options="-parameters" />
+      <module name="eureka-server" options="-parameters" />
+      <module name="orden-service" options="-parameters" />
+      <module name="pago-service" options="-parameters" />
+      <module name="pagos-service" options="-parameters" />
+      <module name="pedido-service" options="-parameters" />
+      <module name="producto-service" options="-parameters" />
+      <module name="ruta-service" options="-parameters" />
+    </option>
+  </component>
+</project>

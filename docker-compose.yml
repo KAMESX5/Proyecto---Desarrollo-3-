@@ -1,0 +1,134 @@
+
+services:
+  postgres:
+    image: postgres:15
+    container_name: postgres
+    environment:
+      POSTGRES_DB: proyecto_desarrollotres
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: 2711
+    ports:
+      - "5432:5432"
+    networks:
+      - proyecto_desarrollotres-net
+
+  eureka-server:
+    build: ./eureka-server
+    container_name: eureka-server
+    ports:
+      - "8761:8761"
+    networks:
+      - proyecto_desarrollotres-net
+
+  producto-service:
+    image: producto-service-image
+    container_name: producto-service
+    depends_on:
+      - eureka-server
+      - postgres
+    environment:
+      - SPRING_RABBITMQ_HOST=rabbitmq
+      - SPRING_RABBITMQ_PORT=5672
+      - EUREKA_CLIENT_SERVICEURL_DEFAULTZONE=http://eureka-server:8761/eureka
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://postgres:5432/proyecto_desarrollotres
+      - SPRING_DATASOURCE_USERNAME=postgres
+      - SPRING_DATASOURCE_PASSWORD=2711
+      - SPRING_PROFILES_ACTIVE=prod
+
+    ports:
+      - "8081:8081"
+    networks:
+      - proyecto_desarrollotres-net
+
+  orden-service:
+    image: orden-service-image
+    container_name: orden-service
+    depends_on:
+      - eureka-server
+      - postgres
+    environment:
+      - SPRING_RABBITMQ_HOST=rabbitmq
+      - SPRING_RABBITMQ_PORT=5672
+      - EUREKA_CLIENT_SERVICEURL_DEFAULTZONE=http://eureka-server:8761/eureka
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://postgres:5432/proyecto_desarrollotres
+      - SPRING_DATASOURCE_USERNAME=postgres
+      - SPRING_DATASOURCE_PASSWORD=2711
+      - SPRING_PROFILES_ACTIVE=prod
+
+    ports:
+      - "8083:8083"
+    networks:
+      - proyecto_desarrollotres-net
+
+  pago-service:
+    image: pago-service-image
+    container_name: pago-service
+    depends_on:
+      - eureka-server
+      - postgres
+    environment:
+      - SPRING_RABBITMQ_HOST=rabbitmq
+      - SPRING_RABBITMQ_PORT=5672
+      - EUREKA_CLIENT_SERVICEURL_DEFAULTZONE=http://eureka-server:8761/eureka
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://postgres:5432/proyecto_desarrollotres
+      - SPRING_DATASOURCE_USERNAME=postgres
+      - SPRING_DATASOURCE_PASSWORD=2711
+      - SPRING_PROFILES_ACTIVE=prod
+
+    ports:
+      - "8084:8084"
+    networks:
+      - proyecto_desarrollotres-net
+
+  entrega-service:
+    image: entrega-service-image
+    container_name: entrega-service
+    depends_on:
+      - eureka-server
+      - postgres
+    environment:
+      - SPRING_RABBITMQ_HOST=rabbitmq
+      - SPRING_RABBITMQ_PORT=5672
+      - EUREKA_CLIENT_SERVICEURL_DEFAULTZONE=http://eureka-server:8761/eureka
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://postgres:5432/proyecto_desarrollotres
+      - SPRING_DATASOURCE_USERNAME=postgres
+      - SPRING_DATASOURCE_PASSWORD=2711
+      - SPRING_PROFILES_ACTIVE=prod
+
+    ports:
+      - "8085:8085"
+    networks:
+      - proyecto_desarrollotres-net
+
+  detalleorden-service:
+    image: detalleorden-service-image
+    container_name: detalleorden-service
+    depends_on:
+      - eureka-server
+      - postgres
+    environment:
+      - SPRING_RABBITMQ_HOST=rabbitmq
+      - SPRING_RABBITMQ_PORT=5672
+      - EUREKA_CLIENT_SERVICEURL_DEFAULTZONE=http://eureka-server:8761/eureka
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://postgres:5432/proyecto_desarrollotres
+      - SPRING_DATASOURCE_USERNAME=postgres
+      - SPRING_DATASOURCE_PASSWORD=2711
+      - SPRING_PROFILES_ACTIVE=prod
+
+    ports:
+      - "8082:8082"
+    networks:
+      - proyecto_desarrollotres-net
+
+
+  rabbitmq:
+    image: rabbitmq:3-management
+    container_name: rabbitmq
+    ports:
+      - "5672:5672" #puerto AMQP
+      - "15672:15672" #Interfaz Web
+    networks:
+      - proyecto_desarrollotres-net
+networks:
+  proyecto_desarrollotres-net:
+    driver: bridge

@@ -1,0 +1,47 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: pago-service
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: pago-service
+  template:
+    metadata:
+      labels:
+        app: pago-service
+    spec:
+      containers:
+        - name: pago-service
+          image: us-central1-docker.pkg.dev/wired-name-463505-d6/microservicios-repo/pago-service:latest
+          ports:
+            - containerPort: 8080
+          env:
+            - name: SPRING_RABBITMQ_HOST
+              value: "rabbitmq"
+            - name: SPRING_RABBITMQ_PORT
+              value: "5672"
+            - name: EUREKA_CLIENT_SERVICEURL_DEFAULTZONE
+              value: "http://eureka-server:8761/eureka"
+            - name: SPRING_DATASOURCE_URL
+              value: "jdbc:postgresql://postgres:5432/postgres"
+            - name: SPRING_DATASOURCE_USERNAME
+              value: "postgres"
+            - name: SPRING_DATASOURCE_PASSWORD
+              value: "2711"
+            - name: SPRING_PROFILES_ACTIVE
+              value: "prod"
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: pago-service
+spec:
+  type: ClusterIP
+  selector:
+    app: pago-service
+  ports:
+    - port: 8080
+      targetPort: 8080
